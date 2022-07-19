@@ -21,6 +21,42 @@ $ make
 [i3wm]: https://i3wm.org
 [i3ass]: https://github.com/budlabs/i3ass
 
+
+## options
+
+```
+-a, --autotile                            | always creates a new window with instance "auto"
+--bg                         COLOR        | set background color
+-d, --cd                     DIR          | set initial working directory 
+--dont-beam-me-up-scotty                  | no beam cursor
+--dryrun                                  | dont execute commands  
+--fg                         COLOR        | set foreground color
+-f, --font                   FONT         | set font 
+--font-size                  INT          | set font-size 
+-G, --geometry               GEOMETRY     | set gemoetry (COLUMNSxLINES)
+-h, --help                                | display help and exit 
+--hide                                    | option will get redirected to i3run 
+-i, --instance               INSTANCE     | instance name to target
+--large-font                              | if setting "large_font" is set it will be used 
+-l, --list-palettes                       | lists available palettes
+--login                                   | passes '-l' to the shell 
+-m, --mouse                               | option will get redirected to i3run 
+-g, --nohide                              | option will get redirected to i3run 
+-p, --palette                PALETTE|FILE | use the colors from palette
+--palette-menu                            | short description  
+--role                       ROLE         | this have the exact same function as --instance
+--shell                      SHELL        | set shell, defaults to `$SHELL`
+--st-options                 OPTIONS      | extra options passed to st
+-s, --summon                              | option will get redirected to i3run 
+--terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal)
+--urxvt-options              OPTIONS      | extra options passed to urxvt
+-V, --verbose                             | print command and script file to stderr  
+-v, --version                             | print version and exit 
+--xfce4-terminal-options     OPTIONS      | extra options passed to xfce4-terminal
+--xterm-options              OPTIONS      | extra options passed to xterm
+```
+
+
 ## EXAMPLES
 
 ### i3 keybinding configuration
