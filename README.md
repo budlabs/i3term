@@ -86,7 +86,7 @@ set $TC exec --no-startup-id i3fyra --conid $CONID --move
 set $X  exec --no-startup-id
 
 # instace match XTerm|URxvt|st , role matches Xfce4-terminal
-instance=termsmall, role=termsmall
+instance=mainterm, role=mainterm
   $TC A
 
 # floatterm is put in a specific location with i3Kornhe
