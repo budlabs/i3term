@@ -9,7 +9,11 @@ launch_terminal() {
 
     # make sure urxvtd is running before executing urxvtc
     urxvtc         )
-      pidof urxvtd >/dev/null || urxvtd -f > /dev/null 2>&1
+      pidof urxvtd >/dev/null || {
+        urxvtd -f > /dev/null 2>&1
+        [[ ${_o[verbose]} || $BASHBUD_VERBOSE ]] \
+          && ERM "started urxvtd..."
+      }
       BASHBUD_VERBOSE='' BASHBUD_LOG='' "${terminal_command[@]}" > /dev/null 2>&1
     ;;
 
@@ -20,6 +24,8 @@ launch_terminal() {
         BASHBUD_VERBOSE='' BASHBUD_LOG='' "${terminal_command[@]}" > /dev/null 2>&1
       else
         nohup env BASHBUD_VERBOSE='' BASHBUD_LOG='' "${terminal_command[@]}" > /dev/null 2>&1 &
+        [[ ${_o[verbose]} || $BASHBUD_VERBOSE ]] \
+          && ERM "started xfce4-terminal server"
       fi
     ;;
   esac
