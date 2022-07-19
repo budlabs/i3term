@@ -1,11 +1,38 @@
-terminal             = xterm
+# terminal MUST BE SET
+# urxvt|xterm|xfce4-terminal|st
+# override with --terminal
+terminal               = 
 
-default_instance     = i3term
+# list available palettes with --list-palettes
+# if not set the terminal defaults apply
+# override with --palette
+default_palette        = 
 
-font_default         = monospace
-font_large           = monospace
+# the instance name to use if no command is executed
+# override with --instance or --role
+default_instance       = i3term
 
-font_size_default    = 12
-font_size_large      = 16
+# if unset the default terminal font will be used
+# override with --font
+font_default           = monospace
 
-autolarge_containers = AC
+# font to use when --large-font is set or when
+# --autotile spawn a window in autolarge_containers
+font_large             = 
+
+# override with --fontsize
+font_size_default      = 12
+
+font_size_large        = 
+
+# one or more container characters (example: AC)
+# only applies to i3fyra workspace and with --autotile
+autolarge_containers   = 
+
+# terminal specific options. don't use these!
+xfce4-terminal_options = 
+xterm_options          = 
+st_options             = 
+urxvt_options          = 
+
+# syntax:ssHash
