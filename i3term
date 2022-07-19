@@ -34,6 +34,10 @@ main(){
   
   parse_config
 
+  [[ $_base_command =~ (xterm|urxvtc|xfce4-terminal|st) ]] \
+    || ERX "'$_base_command' is not a supported terminal." \
+           "set 'terminal' option in $XDG_CONFIG_HOME/i3term/config"
+
   # --role is added as a convenience since it is the
   # actual criteria used for xfce4-terminal
   : "${_o[instance]:=${_o[role]}}"
@@ -94,7 +98,8 @@ main(){
                   --synk --timeout 1         \
                   "$criteria" "${_o[instance]}"
            )
-    [[ $conid && ! ${_o[instance]} =~ auto|floatterm ]] \
+
+    [[ $conid && ! ${_o[autotile]} ]] \
       && messy "[con_id=$conid] title_format ${_o[instance]}"
 
     [[ $conid ]] && echo "$conid"
