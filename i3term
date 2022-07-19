@@ -1,0 +1,105 @@
+#!/bin/bash
+
+# SPDX-FileCopyrightText: 2022 budRich af budlabs
+# SPDX-License-Identifier: 0BSD
+
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+
+main(){
+
+  declare -A conf
+  declare -a terminal_command
+  declare -g _terminal_class _base_command
+
+  # in makefile m4 will expand DATA_DIR (/usr/share/i3term)
+  # before installation
+  if [[ -d DATA_DIR ]]; then 
+    _data_dir='DATA_DIR'
+  elif [[ -d $__dir ]]; then #bashbud
+    _data_dir="$__dir/data"  #bashbud
+  else
+    ERX "no default config files. Consider reinstalling i3term."
+  fi
+
+  if [[ ${_o[list-palettes]} ]]; then
+    if [[ -d "$_data_dir"/palettes ]]
+      then ls -1 "$_data_dir"/palettes
+      else ERM "could not find palettes directory.."
+    fi 
+    exit
+  elif [[ ${_o[palette-menu]} ]]; then
+    theme_menu
+    exit
+  fi
+  
+  parse_config
+
+  # --role is added as a convenience since it is the
+  # actual criteria used for xfce4-terminal
+  : "${_o[instance]:=${_o[role]}}"
+
+  if [[ $_base_command = xfce4-terminal ]]
+    then criteria='--role'
+    else criteria='--instance'
+  fi
+
+  if [[ ${_o[autotile]} ]]; then
+    _o[instance]=auto
+    auto_large_font
+  else
+    (($# == 1)) && : "${_o[instance]:=$1}"
+    [[ ${_o[instance]} ]] \
+      || : "${_o[instance]:=${1:-${conf[default_instance]:-i3term}}}"
+
+    conid=$(i3get "$criteria" "${_o[instance]}" -c "$_terminal_class")
+  fi
+
+  # if i3get finds a windows (conid) we focus the existing
+  # window with i3run instead of starting a new terminal
+  [[ $conid && ! ${_o[dryrun]} ]] && {
+
+    i3run_flags=(hide mouse nohide summon verbose)
+
+    for o in "${i3run_flags[@]}"; do
+      [[ ${_o[$o]} ]] && i3run_args+=("--$o")
+    done
+
+    i3run --conid "$conid" "${i3run_args[@]}"
+    messy "[con_id=$conid] title_format ${_o[instance]}"
+
+    exit
+  }
+
+  terminal_command+=("$_base_command")
+
+  case "$_base_command" in
+    st             ) terminal_command+=(-n     "${_o[instance]}") ;;
+    xterm|urxvtc   ) terminal_command+=(-name  "${_o[instance]}") ;;
+    xfce4-terminal ) terminal_command+=(--role "${_o[instance]}") ;;
+  esac
+
+  set_font
+  set_options
+  create_script_file "$@"
+
+  [[ ${_o[verbose]} || $BASHBUD_VERBOSE ]] && {
+    sed 's/^/  /g' "$_temp_file"
+    printf '\n%s\n' "${terminal_command[*]}"
+  } >&2
+
+  [[ ${_o[dryrun]} ]] || {
+    launch_terminal
+  
+    conid=$(i3get --class "$_terminal_class" \
+                  --synk --timeout 1         \
+                  "$criteria" "${_o[instance]}"
+           )
+    [[ $conid && ! ${_o[instance]} =~ auto|floatterm ]] \
+      && messy "[con_id=$conid] title_format ${_o[instance]}"
+
+    [[ $conid ]] && echo "$conid"
+  }
+}
+
+__dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")") #bashbud
+source "$__dir/_init.sh"                              #bashbud

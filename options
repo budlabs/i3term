@@ -1,0 +1,33 @@
+--terminal TERMINAL
+
+--instance|-i INSTANCE
+--role ROLE
+--autotile|-a
+
+--palette|-p PALETTE|FILE
+--fg COLOR --bg COLOR
+--list-palettes|-l
+--palette-menu
+
+--large-font 
+--font|-f FONT --font-size INT
+
+--cd|-d DIR 
+--xfce4-terminal-options OPTIONS
+--xterm-options OPTIONS
+--urxvt-options OPTIONS
+--st-options OPTIONS
+--geometry|-G GEOMETRY
+--dont-beam-me-up-scotty
+--shell SHELL --login
+
+--hide
+--summon|-s
+--nohide|-g
+--mouse|-m
+
+--verbose|-V
+--dryrun
+
+--help|-h
+--version|-v

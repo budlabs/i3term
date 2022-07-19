@@ -1,0 +1,11 @@
+terminal             = xterm
+
+default_instance     = i3term
+
+font_default         = monospace
+font_large           = monospace
+
+font_size_default    = 12
+font_size_large      = 16
+
+autolarge_containers = AC
