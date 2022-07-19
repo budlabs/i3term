@@ -93,9 +93,11 @@ main(){
 
   [[ ${_o[dryrun]} ]] || {
     launch_terminal
-  
+    
+    # TODO: add --timeout when we know latest i3ass
+    #       builds successfully.. 
     conid=$(i3get --class "$_terminal_class" \
-                  --synk --timeout 1         \
+                  --synk                     \
                   "$criteria" "${_o[instance]}"
            )
 
