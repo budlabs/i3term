@@ -22,6 +22,9 @@ $ make
 - [rofi] (*to use*: `i3term --palette-menu`)  
 - `xterm|urxvt|xfce4-terminal|st`
 ## usage
+`i3term` needs to know which terminal emulator to
+use. Make sure it is declared in
+the **configuration file** (`~/.config/i3term/config`).
 ```
 i3term [OPTIONS]
 -a, --autotile                            | always creates a new window with instance "auto"

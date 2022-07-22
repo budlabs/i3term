@@ -15,6 +15,7 @@ MANPAGE_DEPS =                       \
 	$(CACHE_DIR)/help_table.txt        \
 	$(CACHE_DIR)/long_help.md          \
 	$(wildcard $(DOCS_DIR)/examples/*) \
+	$(DOCS_DIR)/description.md         \
 	$(DOCS_DIR)/links.md               \
 	$(CACHE_DIR)/copyright.txt
 
@@ -38,8 +39,8 @@ $(MANPAGE): config.mak $(MANPAGE_DEPS)
 								  '$(NAME) - $(DESCRIPTION)'
 
 		echo "## USAGE"
-		echo '`$(USAGE)`'
-		# cat $(DOCS_DIR)/description.md
+		echo '`$(USAGE)`  '
+		cat $(DOCS_DIR)/description.md
 		echo "## OPTIONS"
 		sed 's/^/    /g' $(CACHE_DIR)/help_table.txt
 		cat $(CACHE_DIR)/long_help.md
@@ -63,6 +64,7 @@ README_DEPS =                        \
 	$(DOCS_DIR)/links.md               \
 	$(DOCS_DIR)/readme_install.md      \
 	$(DOCS_DIR)/readme_banner.md       \
+	$(DOCS_DIR)/description.md         \
 	$(DOCS_DIR)/links.md
 
 README.md: $(README_DEPS)
@@ -72,6 +74,7 @@ README.md: $(README_DEPS)
 	  echo "## installation"
 	  cat $(DOCS_DIR)/readme_install.md
 	  echo "## usage"
+	  cat $(DOCS_DIR)/description.md
 	  echo '```'
 	  echo '$(USAGE)'
 	  cat "$(CACHE_DIR)/help_table.txt"
