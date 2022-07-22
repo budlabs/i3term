@@ -70,7 +70,6 @@ $super+Shift+Return   $exec i3term --instance floatterm --summon --geometry 50x8
 $super+t              $exec i3term --palette-menu
 $super+v              $exec typisktstart
 ```
-
 ### i3king config examples
 
 ```text
@@ -104,25 +103,6 @@ instance=sidplayfp class=(URxvt|XTerm|st-256color), \
 role=sidplayfp class=Xfce4-terminal
   $TC A
 ```
-
-
-### typisktstart
-
-This is just a wrapper script around [typiskt]. It is
-convenient to change properties in its own script.
-![typiskt](https://user-images.githubusercontent.com/2143465/180494963-6053eddb-6bc8-4493-a75f-e64179344df0.png)
-
-```bash
-#!/bin/bash
-
-# aur/ttf-go-mono-git
-# aur/typiskt
-i3term --font "Go Mono" --font-size "16" \
-       --palette clrs-light              \
-       --geometry 50x12                  \
-  -- typiskt --corpus english --lines 3
-```
-
 ### sidopen
 
 This script can be used to open *.sid* files (C64 music files).
@@ -140,8 +120,22 @@ i3term --instance sidplayfp          \
        --geometry 56x16              \
   -- sidplayfp -q "$1"
 ```
+### typisktstart
 
+This is just a wrapper script around [typiskt]. It is
+convenient to change properties in its own script.
+![typiskt](https://user-images.githubusercontent.com/2143465/180494963-6053eddb-6bc8-4493-a75f-e64179344df0.png)
 
+```bash
+#!/bin/bash
+
+# aur/ttf-go-mono-git
+# aur/typiskt
+i3term --font "Go Mono" --font-size "16" \
+       --palette clrs-light              \
+       --geometry 50x12                  \
+  -- typiskt --corpus english --lines 3
+```
 [i3wm]: https://i3wm.org
 [i3ass]: https://github.com/budlabs/i3ass
 [i3ass wiki]: https://github.com/budlabs/i3ass/wiki

@@ -107,33 +107,12 @@ role=sidplayfp class=Xfce4-terminal
 .fi
 .RE
 
-.SS typisktstart
-.PP
-This is just a wrapper script around typiskt
-\[la]https://github.com/budlabs/typiskt\[ra]\&. It is
-convenient to change properties in its own script.
-
-.PP
-.RS
-
-.nf
-#!/bin/bash
-
-# aur/ttf-go-mono-git
-# aur/typiskt
-i3term --font "Go Mono" --font-size "16" \\
-       --palette clrs-light              \\
-       --geometry 50x12                  \\
-  -- typiskt --corpus english --lines 3
-
-.fi
-.RE
-
 .SS sidopen
 .PP
 This script can be used to open \fI\&.sid\fP files (C64 music files).
 With sidplayfp
 \[la]https://github.com/libsidplayfp/libsidplayfp\[ra] in a terminal using the C64 font and colors.
+
 
 .PP
 .RS
@@ -148,6 +127,29 @@ i3term --instance sidplayfp          \\
        --font ' C64 Pro Mono'        \\
        --geometry 56x16              \\
   -- sidplayfp -q "$1"
+
+.fi
+.RE
+
+.SS typisktstart
+.PP
+This is just a wrapper script around typiskt
+\[la]https://github.com/budlabs/typiskt\[ra]\&. It is
+convenient to change properties in its own script.
+
+
+.PP
+.RS
+
+.nf
+#!/bin/bash
+
+# aur/ttf-go-mono-git
+# aur/typiskt
+i3term --font "Go Mono" --font-size "16" \\
+       --palette clrs-light              \\
+       --geometry 50x12                  \\
+  -- typiskt --corpus english --lines 3
 
 .fi
 .RE

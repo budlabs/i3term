@@ -14,7 +14,7 @@ PREFIX       ?= /usr
 MANPAGE_DEPS =                       \
 	$(CACHE_DIR)/help_table.txt        \
 	$(CACHE_DIR)/long_help.md          \
-	$(DOCS_DIR)/examples.md            \
+	$(wildcard $(DOCS_DIR)/examples/*) \
 	$(DOCS_DIR)/links.md               \
 	$(CACHE_DIR)/copyright.txt
 
@@ -45,7 +45,7 @@ $(MANPAGE): config.mak $(MANPAGE_DEPS)
 		cat $(CACHE_DIR)/long_help.md
 
 		echo "## EXAMPLES"
-		cat $(DOCS_DIR)/examples.md
+		cat $(DOCS_DIR)/examples/*
 
 		printf '%s\n' '## CONTACT' \
 			"Send bugs and feature requests to:  " "$(CONTACT)/issues"
@@ -59,7 +59,7 @@ $(MANPAGE): config.mak $(MANPAGE_DEPS)
 README_DEPS =                        \
 	$(CACHE_DIR)/help_table.txt        \
 	$(CACHE_DIR)/long_help.md          \
-	$(DOCS_DIR)/examples.md            \
+	$(wildcard $(DOCS_DIR)/examples/*) \
 	$(DOCS_DIR)/links.md               \
 	$(DOCS_DIR)/readme_install.md      \
 	$(DOCS_DIR)/readme_banner.md       \
@@ -77,7 +77,7 @@ README.md: $(README_DEPS)
 	  cat "$(CACHE_DIR)/help_table.txt"
 	  echo '```'
 	  echo "## examples"
-	  cat $(DOCS_DIR)/examples.md
+	  cat $(DOCS_DIR)/examples/*
 	  cat $(DOCS_DIR)/links.md
 	} > $@
 
