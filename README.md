@@ -2,12 +2,10 @@ This script makes managing terminals under [i3wm] easier.
 It uses various scripts from [i3ass] and works with the
 following terminals:  
 
-- URxvt
-- XTerm
-- xfce4-terminal
-- st
-
-To use the **Theme-switcher-menu** you need **rofi**.
+- **URxvt**
+- **XTerm**
+- **xfce4-terminal**
+- **st**
 ## installation
 ```
 $ git clone https://github.com/budlabs/i3term.git
@@ -21,7 +19,7 @@ $ make
 
 #### runtime dependencies
 - [i3ass]  
-- [rofi] (*only used by [i3menu]*/`--palette-menu`)  
+- [rofi] (*to use*: `i3term --palette-menu`)  
 - `xterm|urxvt|xfce4-terminal|st`
 ## usage
 ```

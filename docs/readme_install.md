@@ -10,5 +10,5 @@ $ make
 
 #### runtime dependencies
 - [i3ass]  
-- [rofi] (*only used by [i3menu]*/`--palette-menu`)  
+- [rofi] (*to use*: `i3term --palette-menu`)  
 - `xterm|urxvt|xfce4-terminal|st`
