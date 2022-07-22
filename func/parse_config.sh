@@ -6,7 +6,7 @@ parse_config() {
 
   config_file="$XDG_CONFIG_HOME/i3term/config"
   
-  [[ -f $config_file ]] || cp "$_data_dir/config" "$config_file"
+  [[ -f $config_file ]] || install -Dm644 "$_data_dir/config" "$config_file"
 
   re='^\s*([^#][^[:space:]=]+)\s*=\s*(.+)\s*$'
 
