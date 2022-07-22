@@ -8,9 +8,7 @@ following terminals:
 - st
 
 To use the **Theme-switcher-menu** you need **rofi**.
-
-### installation
-
+## installation
 ```
 $ git clone https://github.com/budlabs/i3term.git
 $ cd i3term
@@ -18,13 +16,16 @@ $ make
 # make install
 ```
 
-[i3wm]: https://i3wm.org
-[i3ass]: https://github.com/budlabs/i3ass
+#### build dependencies
+[GNU make], [Gawk], [bash], [GNU sed](https://www.gnu.org/software/sed/)  
 
-
-## options
-
+#### runtime dependencies
+- [i3ass]  
+- [rofi] (*only used by [i3menu]*/`--palette-menu`)  
+- `xterm|urxvt|xfce4-terminal|st`
+## usage
 ```
+i3term [OPTIONS]
 -a, --autotile                            | always creates a new window with instance "auto"
 --bg                         COLOR        | set background color
 -d, --cd                     DIR          | set initial working directory 
@@ -55,35 +56,36 @@ $ make
 --xfce4-terminal-options     OPTIONS      | extra options passed to xfce4-terminal
 --xterm-options              OPTIONS      | extra options passed to xterm
 ```
-
-
-## EXAMPLES
-
+## examples
 ### i3 keybinding configuration
 
-```
-set $X exec --no-startup-id exec
+The `$exec` and `$super` variables are compatible 
+with the configuration example from the [i3ass wiki].
 
-bindsym Mod4+Return         $X i3term --instance mainterm --large-font --palette base16-grayscale-light
-bindsym Mod4+Control+Return $X i3term --autotile
-bindsym Mod4+Shift+Return   $X i3term --instance floatterm --summon --geometry 50x8
-bindsym Mod4+t              $X i3term --palette-menu
-bindsym Mod4+v              $X typisktstart
+```
+set $exec exec --no-startup-id exec
+set $super bindsym Mod4
+
+$super+Return         $exec i3term --instance mainterm --large-font --palette base16-grayscale-light
+$super+Control+Return $exec i3term --autotile
+$super+Shift+Return   $exec i3term --instance floatterm --summon --geometry 50x8
+$super+t              $exec i3term --palette-menu
+$super+v              $exec typisktstart
 ```
 
 ### i3king config examples
 
 ```text
+# TC is a variable for i3fyra --move A|B|C|D
+set $TC exec --no-startup-id i3fyra --conid $CONID --move
+set $X  exec --no-startup-id
+
 # ignore terminals with instance name "auto" (--autotile)
 # from the DEFAULT rule.
 DEFAULT \
   class=(URxvt|XTerm|st-256color) instance=auto, \
   class=Xfce4-terminal role=auto,
     floating enable, border normal 2, title_window_icon padding 3px
-
-# TC is a variable for i3fyra --move A|B|C|D
-set $TC exec --no-startup-id i3fyra --conid $CONID --move
-set $X  exec --no-startup-id
 
 # instace match XTerm|URxvt|st , role matches Xfce4-terminal
 instance=mainterm, role=mainterm
@@ -99,13 +101,17 @@ instance=typiskt, role=typiskt
   move to workspace 2, floating enable;        \
     $X i3Kornhe --oneshot --margin 300 move 4; \
     workspace 2
+
+instance=sidplayfp class=(URxvt|XTerm|st-256color), \
+role=sidplayfp class=Xfce4-terminal
+  $TC A
 ```
 
 
 ### typisktstart
 
 This is just a wrapper script around [typiskt]. It is
-convenient change properties in its own script.
+convenient to change properties in its own script.
 
 ```bash
 #!/bin/bash
@@ -131,5 +137,21 @@ With [sidplayfp] in a terminal using the C64 font and colors.
 i3term --instance sidplayfp          \
        --bg '#2E2C9B' --fg '#706DEB' \
        --font ' C64 Pro Mono'        \
+       --geometry 56x16              \
   -- sidplayfp -q "$1"
 ```
+
+
+[i3wm]: https://i3wm.org
+[i3ass]: https://github.com/budlabs/i3ass
+[i3ass wiki]: https://github.com/budlabs/i3ass/wiki
+[typiskt]: https://github.com/budlabs/typiskt
+[sidplayfp]: https://github.com/libsidplayfp/libsidplayfp
+
+[youtube channel]: https://youtube.com/c/dubbeltumme
+[rofi]: https://github.com/davatorium/rofi
+[Gawk]: https://www.gnu.org/software/gawk/
+[bash]: https://www.gnu.org/software/bash/
+[lowdown]: https://kristaps.bsd.lv/lowdown/
+[GNU make]: https://www.gnu.org/software/make/
+[xdotool]: https://www.semicomplete.com/projects/xdotool/
