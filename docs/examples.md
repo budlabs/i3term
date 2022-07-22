@@ -53,6 +53,7 @@ role=sidplayfp class=Xfce4-terminal
 
 This is just a wrapper script around [typiskt]. It is
 convenient to change properties in its own script.
+![typiskt](https://user-images.githubusercontent.com/2143465/180494963-6053eddb-6bc8-4493-a75f-e64179344df0.png)
 
 ```bash
 #!/bin/bash
@@ -69,6 +70,7 @@ i3term --font "Go Mono" --font-size "16" \
 
 This script can be used to open *.sid* files (C64 music files).
 With [sidplayfp] in a terminal using the C64 font and colors.
+![sidplay](https://user-images.githubusercontent.com/2143465/180494442-8d05be72-7ece-4b72-ba9d-02096316c622.png)
 
 ```bash
 #!/bin/bash
