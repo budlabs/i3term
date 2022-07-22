@@ -1,42 +1,87 @@
 NAME         := i3term
 CREATED      := 2022-07-14
-UPDATED      := today
-VERSION      := 0
-DESCRIPTION  := short description for the script
+UPDATED      := 2022-07-22
+VERSION      := 2022.07.22
+DESCRIPTION  := launch terminals with i3run
 AUTHOR       := budRich
-CONTACT      := https://github.com/budlabs
+CONTACT      := https://github.com/budlabs/i3term
 ORGANISATION := budlabs
+LICENSE      := 0BSD
 USAGE        := $(NAME) [OPTIONS]
 
 PREFIX       ?= /usr
 
+MANPAGE_DEPS =                       \
+	$(CACHE_DIR)/help_table.txt        \
+	$(CACHE_DIR)/long_help.md          \
+	$(wildcard $(DOCS_DIR)/examples/*) \
+	$(DOCS_DIR)/description.md         \
+	$(DOCS_DIR)/links.md               \
+	$(CACHE_DIR)/copyright.txt
+
+manpage_section = 1
+MANPAGE = $(NAME).$(manpage_section)
 .PHONY: manpage
 manpage: $(MANPAGE)
 
-MANPAGE      := $(NAME).1
-
-$(MANPAGE): config.mak $(CACHE_DIR)/help_table.txt
+$(MANPAGE): config.mak $(MANPAGE_DEPS) 
 	@$(info making $@)
 	uppercase_name=$(NAME)
 	uppercase_name=$${uppercase_name^^}
 	{
+		# this first "<h1>" adds "corner" info to the manpage
 		echo "# $$uppercase_name "           \
 				 "$(manpage_section) $(UPDATED)" \
 				 "$(ORGANISATION) \"User Manuals\""
 
+		# main sections (NAME|OPTIONS..) should be "<h2>" (##), sub (###) ...
 	  printf '%s\n' '## NAME' \
-								  '$(NAME) - $(DESCRIPTION)' \
-	                '## OPTIONS'
+								  '$(NAME) - $(DESCRIPTION)'
 
-	  cat $(CACHE_DIR)/help_table.txt
+		echo "## USAGE"
+		echo '`$(USAGE)`  '
+		cat $(DOCS_DIR)/description.md
+		echo "## OPTIONS"
+		sed 's/^/    /g' $(CACHE_DIR)/help_table.txt
+		cat $(CACHE_DIR)/long_help.md
+
+		echo "## EXAMPLES"
+		cat $(DOCS_DIR)/examples/*
+
+		printf '%s\n' '## CONTACT' \
+			"Send bugs and feature requests to:  " "$(CONTACT)/issues"
+
+		printf '%s\n' '## COPYRIGHT'
+		cat $(CACHE_DIR)/copyright.txt
+		cat $(DOCS_DIR)/links.md
 
 	} | go-md2man > $@
 
+README_DEPS =                        \
+	$(CACHE_DIR)/help_table.txt        \
+	$(CACHE_DIR)/long_help.md          \
+	$(wildcard $(DOCS_DIR)/examples/*) \
+	$(DOCS_DIR)/links.md               \
+	$(DOCS_DIR)/readme_install.md      \
+	$(DOCS_DIR)/readme_banner.md       \
+	$(DOCS_DIR)/description.md         \
+	$(DOCS_DIR)/links.md
 
-README.md: $(CACHE_DIR)/help_table.txt
+README.md: $(README_DEPS)
 	@$(making $@)
 	{
-	  cat $(CACHE_DIR)/help_table.txt
+	  cat $(DOCS_DIR)/readme_banner.md
+	  echo "## installation"
+	  cat $(DOCS_DIR)/readme_install.md
+	  echo "## usage"
+	  cat $(DOCS_DIR)/description.md
+	  echo '```'
+	  echo '$(USAGE)'
+	  cat "$(CACHE_DIR)/help_table.txt"
+	  echo '```'
+	  echo "## examples"
+	  cat $(DOCS_DIR)/examples/*
+	  cat $(DOCS_DIR)/links.md
 	} > $@
 
 $(CACHE_DIR)/_$(NAME).out: $(MONOLITH)
@@ -47,7 +92,7 @@ $(CACHE_DIR)/_$(NAME).out: $(MONOLITH)
 installed_script    := $(DESTDIR)$(PREFIX)/bin/$(NAME)
 installed_license   := $(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/LICENSE
 installed_manpage   := \
-	$(DESTDIR)$(PREFIX)/share/man/man$(subst .,,$(suffix $(MANPAGE)))/$(MANPAGE)
+	$(DESTDIR)$(PREFIX)/share/man/man$(manpage_section)/$(MANPAGE)
 
 DATA_DIR := $(DESTDIR)$(PREFIX)/share/$(NAME)
 

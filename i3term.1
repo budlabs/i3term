@@ -1,59 +1,171 @@
-.\" -*- mode: troff; coding: utf-8 -*-
-.TH "i3term" "1" "2022-03-19" "" ""
-.SH
-i3term
-.LP
-short description of the script
-.LP
-\l'2i'
-.LP
-usage: i3term [OPTIONS]
-.LP
-.EX
--o, --hello WORD | short description          
--v, --version    | print version info and exit
--h, --help       | print help and exit        
-.EE
-.SH
-USAGE
-.LP
-This is just a boilerplate.  \fBbold\fR \fIitalic\fR
-and other \fCmarkdown\fR options are supported.  
+.nh
+.TH I3TERM  1 2022-07-22 budlabs "User Manuals"
+.SH NAME
 .PP
-dependencies:
+i3term - launch terminals with i3run
+
+.SH USAGE
+.PP
+\fB\fCi3term [OPTIONS]\fR
 .br
-- make, bash, gawk
+\fB\fCi3term\fR needs to know which terminal emulator to
+use. Make sure it is declared in
+the \fBconfiguration file\fP (\fB\fC~/.config/i3term/config\fR).
+
+.SH OPTIONS
+.PP
+.RS
+
+.nf
+-a, --autotile                            | always creates a new window with instance "auto"
+--bg                         COLOR        | set background color
+-d, --cd                     DIR          | set initial working directory 
+--dont-beam-me-up-scotty                  | no beam cursor
+--dryrun                                  | dont execute commands  
+--fg                         COLOR        | set foreground color
+-f, --font                   FONT         | set font 
+--font-size                  INT          | set font-size 
+-G, --geometry               GEOMETRY     | set gemoetry (COLUMNSxLINES)
+-h, --help                                | display help and exit 
+--hide                                    | option will get redirected to i3run 
+-i, --instance               INSTANCE     | instance name to target
+--large-font                              | if setting "large_font" is set it will be used 
+-l, --list-palettes                       | lists available palettes
+--login                                   | passes '-l' to the shell 
+-m, --mouse                               | option will get redirected to i3run 
+-g, --nohide                              | option will get redirected to i3run 
+-p, --palette                PALETTE|FILE | use the colors from palette
+--palette-menu                            | short description  
+--role                       ROLE         | this have the exact same function as --instance
+--shell                      SHELL        | set shell, defaults to `$SHELL`
+--st-options                 OPTIONS      | extra options passed to st
+-s, --summon                              | option will get redirected to i3run 
+--terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal)
+--urxvt-options              OPTIONS      | extra options passed to urxvt
+-V, --verbose                             | print command and script file to stderr  
+-v, --version                             | print version and exit 
+--xfce4-terminal-options     OPTIONS      | extra options passed to xfce4-terminal
+--xterm-options              OPTIONS      | extra options passed to xterm
+
+.fi
+.RE
+
+.SH EXAMPLES
+.SS i3 keybinding configuration
+.PP
+The \fB\fC$exec\fR and \fB\fC$super\fR variables are compatible
+with the configuration example from the i3ass wiki
+\[la]https://github.com/budlabs/i3ass/wiki\[ra]\&.
+
+.PP
+.RS
+
+.nf
+set $exec exec --no-startup-id exec
+set $super bindsym Mod4
+
+$super+Return         $exec i3term --instance mainterm --large-font --palette base16-grayscale-light
+$super+Control+Return $exec i3term --autotile
+$super+Shift+Return   $exec i3term --instance floatterm --summon --geometry 50x8
+$super+t              $exec i3term --palette-menu
+$super+v              $exec typisktstart
+
+.fi
+.RE
+
+.SS i3king config examples
+.PP
+.RS
+
+.nf
+# TC is a variable for i3fyra --move A|B|C|D
+set $TC exec --no-startup-id i3fyra --conid $CONID --move
+set $X  exec --no-startup-id
+
+# ignore terminals with instance name "auto" (--autotile)
+# from the DEFAULT rule.
+DEFAULT \\
+  class=(URxvt|XTerm|st-256color) instance=auto, \\
+  class=Xfce4-terminal role=auto,
+    floating enable, border normal 2, title_window_icon padding 3px
+
+# instace match XTerm|URxvt|st , role matches Xfce4-terminal
+instance=mainterm, role=mainterm
+  $TC A
+
+# floatterm is put in a specific location with i3Kornhe
+instance=floatterm, role=floatterm
+  floating enable;                          \\
+  $X i3Kornhe --oneshot --margin 40 move 2  \\
+
+# typiskt is put on workspace 2
+instance=typiskt, role=typiskt
+  move to workspace 2, floating enable;        \\
+    $X i3Kornhe --oneshot --margin 300 move 4; \\
+    workspace 2
+
+instance=sidplayfp class=(URxvt|XTerm|st-256color), \\
+role=sidplayfp class=Xfce4-terminal
+  $TC A
+
+.fi
+.RE
+
+.SS sidopen
+.PP
+This script can be used to open \fI\&.sid\fP files (C64 music files).
+With sidplayfp
+\[la]https://github.com/libsidplayfp/libsidplayfp\[ra] in a terminal using the C64 font and colors.
+
+
+.PP
+.RS
+
+.nf
+#!/bin/bash
+
+# aur/ttf-c64
+# extra/libsidplayfp
+i3term --instance sidplayfp          \\
+       --bg '#2E2C9B' --fg '#706DEB' \\
+       --font ' C64 Pro Mono'        \\
+       --geometry 56x16              \\
+  -- sidplayfp -q "$1"
+
+.fi
+.RE
+
+.SS typisktstart
+.PP
+This is just a wrapper script around typiskt
+\[la]https://github.com/budlabs/typiskt\[ra]\&. It is
+convenient to change properties in its own script.
+
+
+.PP
+.RS
+
+.nf
+#!/bin/bash
+
+# aur/ttf-go-mono-git
+# aur/typiskt
+i3term --font "Go Mono" --font-size "16" \\
+       --palette clrs-light              \\
+       --geometry 50x12                  \\
+  -- typiskt --corpus english --lines 3
+
+.fi
+.RE
+
+.SH CONTACT
+.PP
+Send bugs and feature requests to:
 .br
-- \fClowdown\fR , for markdown conversion  
-.IP "\[u2611]" 2
-easy peasy
+https://github.com/budlabs/i3term/issues
+
+.SH COPYRIGHT
+.PP
+Copyright (c) 2022, budRich of budlabs
 .br
-.if n \
-.sp -1
-.if t \
-.sp -0.25v
-.IP "\[u2610]" 2
-\fBmake\fR it your own
-.SH
-OPTIONS
-.SS
-\fC-o\fR, \fC--hello\fR   WORD
-.LP
-\fC--hello\fR long description
-.br
-this is the long description for \fC--hello\fR
-.br
-first line in \fC./docs/hello\fR is the short description.
-.SH
-SEE ALSO
-.LP
-Project site: 
-.SH
-CONTACT
-.LP
-File bugs and feature requests at the following URL:
-.br
-.SH
-AUTHOR
-.LP
-i3term was written by  of 
+SPDX-License-Identifier: 0BSD
