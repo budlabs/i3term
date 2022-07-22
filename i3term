@@ -11,15 +11,16 @@ main(){
   declare -a terminal_command
   declare -g _terminal_class _base_command
 
-  # in makefile m4 will expand DATA_DIR (/usr/share/i3term)
+  # in makefile sed will expand DATA_DIR (/usr/share/i3term)
   # before installation
-  if [[ -d DATA_DIR ]]; then 
-    _data_dir='DATA_DIR'
+  if [[ -d @@DATA_DIR@@ ]]; then 
+    _data_dir='@@DATA_DIR@@'
   elif [[ -d $__dir ]]; then #bashbud
     _data_dir="$__dir/data"  #bashbud
-  else
-    ERX "no default config files. Consider reinstalling i3term."
   fi
+
+  [[ -d $_data_dir && -f "$_data_dir/config" ]] \
+    || ERX "no default config files. Consider reinstalling i3term."
 
   if [[ ${_o[list-palettes]} ]]; then
     if [[ -d "$_data_dir"/palettes ]]

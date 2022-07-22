@@ -40,7 +40,7 @@ README.md: $(CACHE_DIR)/help_table.txt
 	} > $@
 
 $(CACHE_DIR)/_$(NAME).out: $(MONOLITH)
-	m4 -DDATA_DIR=$(PREFIX)/share/$(NAME) $< >$@
+	sed 's|@@DATA_DIR@@|$(PREFIX)/share/$(NAME)|' $< >$@
 
 .PHONY: install uninstall
 
