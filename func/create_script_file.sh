@@ -33,7 +33,8 @@ create_script_file() {
   # shellcheck disable=SC2016
   # SC2016: Expressions don't expand in single quotes.
   # set the title to the path (/dev/pts/X)
-  echo 'printf "\033]0;%s\007" "$(tty)"' >> "$_temp_file"
+  [[ ${conf[auto_set_title],,} =~ true|yes ]] \
+    && echo 'printf "\033]0;%s\007" "$(tty)"' >> "$_temp_file"
 
   # shellcheck disable=SC2028
   # SC2028: echo may not expand escape sequences. Use printf.
@@ -51,7 +52,7 @@ create_script_file() {
 
   if [[ $1 ]] && command -v "$1" > /dev/null; then
     printf "exec"
-    
+
     for arg; do
       if [[ $arg =~ ^([^[:space:]\'\"]+)$ ]]
         then echo -n " $arg"
@@ -60,10 +61,17 @@ create_script_file() {
     done
   else
     [[ $1 ]] && echo "echo command not found: '$*'"
-    echo "exec ${_o[shell]:-$SHELL}${_o[login]:+ -l}"
+
+    _shell=${_o[shell]:-$SHELL}
+    echo -n "exec ${_shell}${_o[login]:+ -l}"
+
+    # it is common that PROMPT_COMMAND is set in /etc/bash.bashrc
+    # to update the title to USER@HOST:PWD
+    # which overwrite i3terms setting of the title
+    [[ $_shell =~ bash && ${conf[auto_set_title],,} =~ true|yes ]] \
+      && echo " --rcfile <(echo unset PROMPT_COMMAND ; cat ~/.bashrc)"
   fi >> "$_temp_file"
 
-  
   chmod +x "$_temp_file"
   terminal_command+=("-e" "$_temp_file")
 }

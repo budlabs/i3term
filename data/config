@@ -3,6 +3,17 @@
 # override with --terminal
 terminal               = 
 
+# if auto set title is not true, i3term will not
+# set the window title to the "path" of the
+# terminal (/dev/pts/X) without that path in the
+# window title, --palette-menu option will not be
+# able to set theme. When set to true, and shell
+# is bash i3term will use a custom bashrc when
+# opeining a terminal without any commands. The
+# first line of that .bashrc is 'unset
+# PROMPT_COMMAND' the rest is a copy of ~/.bashrc
+auto_set_title         = true
+
 # list available palettes with --list-palettes
 # if not set the terminal defaults apply
 # override with --palette

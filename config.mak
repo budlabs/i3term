@@ -1,7 +1,7 @@
 NAME         := i3term
 CREATED      := 2022-07-14
-UPDATED      := 2022-07-22
-VERSION      := 2022.07.22
+UPDATED      := 2022-07-28
+VERSION      := 0.2
 DESCRIPTION  := launch terminals with i3run
 AUTHOR       := budRich
 CONTACT      := https://github.com/budlabs/i3term

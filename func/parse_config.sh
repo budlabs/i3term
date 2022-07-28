@@ -22,6 +22,7 @@ parse_config() {
         st_options                               ) conf[$key]=$var ;;
         urxvt_options                            ) conf[$key]=$var ;;
         default_palette                          ) conf[$key]=$var ;;
+        auto_set_title                           ) conf[$key]=$var ;;
 
         font_size_default|font_size_large )
           if [[ $var =~ [^0-9] ]]; then
