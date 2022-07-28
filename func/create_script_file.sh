@@ -69,8 +69,11 @@ create_script_file() {
     # to update the title to USER@HOST:PWD
     # which overwrite i3terms setting of the title
     [[ $_shell =~ bash && ${conf[auto_set_title],,} =~ true|yes ]] \
-      && echo ' --rcfile <( echo unset PROMPT_COMMAND
-                            [[ -f ~/.bashrc ]] && cat ~/.bashrc )'
+      && printf '%s\n'                          \
+        ' --rcfile <('                          \
+        '  echo unset PROMPT_COMMAND'           \
+        '  [[ -f ~/.bashrc ]] && cat ~/.bashrc' \
+        ')'
   fi >> "$_temp_file"
 
   chmod +x "$_temp_file"
