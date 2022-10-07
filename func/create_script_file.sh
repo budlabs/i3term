@@ -1,8 +1,14 @@
 #!/bin/bash
 
 create_script_file() {
+
   _temp_file="/tmp/i3term$EPOCHREALTIME"
-  echo "#!/bin/sh" > "$_temp_file"
+  _shell=${_o[shell]:-$SHELL}
+
+  if [[ $_shell =~ bash ]]
+    then echo "#!/bin/bash" > "$_temp_file"
+    else echo "#!/bin/sh"   > "$_temp_file"
+  fi
 
   palette_dir="$_data_dir/palettes"
   palette=${_o[palette]}
@@ -62,7 +68,6 @@ create_script_file() {
   else
     [[ $1 ]] && echo "echo command not found: '$*'"
 
-    _shell=${_o[shell]:-$SHELL}
     echo -n "exec ${_shell}${_o[login]:+ -l}"
 
     # it is common that PROMPT_COMMAND is set in /etc/bash.bashrc

@@ -13,7 +13,7 @@ main(){
 
   # in makefile sed will expand DATA_DIR (/usr/share/i3term)
   # before installation
-  if [[ -d @@DATA_DIR@@ ]]; then 
+  if [[ -d @@DATA_DIR@@ ]]; then
     _data_dir='@@DATA_DIR@@'
   elif [[ -d $__dir ]]; then #bashbud
     _data_dir="$__dir/data"  #bashbud
