@@ -9,7 +9,7 @@ set $X  exec --no-startup-id
 # from the DEFAULT rule.
 DEFAULT \
   class=(URxvt|XTerm|st-256color) instance=auto, \
-  class=Xfce4-terminal role=auto,
+  class=Xfce4-terminal role=auto
     floating enable, border normal 2, title_window_icon padding 3px
 
 # instace match XTerm|URxvt|st , role matches Xfce4-terminal

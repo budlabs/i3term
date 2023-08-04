@@ -43,6 +43,7 @@ i3term [OPTIONS]
 -l, --list-palettes                       | lists available palettes
 --login                                   | passes '-l' to the shell 
 -m, --mouse                               | option will get redirected to i3run 
+--no-exec                                 | short description  
 -g, --nohide                              | option will get redirected to i3run 
 -p, --palette                PALETTE|FILE | use the colors from palette
 --palette-menu                            | short description  
@@ -84,7 +85,7 @@ set $X  exec --no-startup-id
 # from the DEFAULT rule.
 DEFAULT \
   class=(URxvt|XTerm|st-256color) instance=auto, \
-  class=Xfce4-terminal role=auto,
+  class=Xfce4-terminal role=auto
     floating enable, border normal 2, title_window_icon padding 3px
 
 # instace match XTerm|URxvt|st , role matches Xfce4-terminal
