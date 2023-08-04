@@ -57,7 +57,7 @@ create_script_file() {
   echo "{ sleep .2 ; rm -f '$_temp_file' ;} &" >> "$_temp_file"
 
   if [[ $1 ]] && command -v "$1" > /dev/null; then
-    printf "exec"
+    [[ ${_o[no-exec]} ]] || printf "exec"
 
     for arg; do
       if [[ $arg =~ ^([^[:space:]\'\"]+)$ ]]
@@ -65,6 +65,7 @@ create_script_file() {
         else echo -n " ${arg@Q}"
       fi
     done
+    echo
   else
     [[ $1 ]] && echo "echo command not found: '$*'"
 

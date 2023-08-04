@@ -12,6 +12,7 @@
 --large-font 
 --font|-f FONT --font-size INT
 
+--no-exec
 --cd|-d DIR 
 --xfce4-terminal-options OPTIONS
 --xterm-options OPTIONS
