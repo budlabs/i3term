@@ -6,3 +6,4 @@ following terminals:
 - **XTerm**
 - **xfce4-terminal**
 - **st**
+- **kitty**

@@ -21,6 +21,7 @@ parse_config() {
         xterm_options                            ) conf[$key]=$var ;;
         st_options                               ) conf[$key]=$var ;;
         urxvt_options                            ) conf[$key]=$var ;;
+        kitty_options                            ) conf[$key]=$var ;;
         default_palette                          ) conf[$key]=$var ;;
         auto_set_title                           ) conf[$key]=$var ;;
 
@@ -60,6 +61,10 @@ parse_config() {
             st ) 
               _base_command=st 
               _terminal_class=st-256color
+              ;;
+            kitty )
+              _base_command=kitty
+              _terminal_class=kitty
               ;;
             *  ) ERX "config error, '$var' is not a supported terminal." ;;
           esac

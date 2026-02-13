@@ -7,6 +7,9 @@ set_options() {
       xterm|urxvtc   ) terminal_command+=("-geometry" "${_o[geometry]}") ;;
       st             ) terminal_command+=("-g" "${_o[geometry]}") ;;
       xfce4-terminal ) terminal_command+=("--geometry" "${_o[geometry]}") ;;
+      kitty          ) terminal_command+=("-o" "remember_window_size=no")
+                       terminal_command+=("-o" "initial_window_width=${_o[geometry]%x*}c")
+                       terminal_command+=("-o" "initial_window_height=${_o[geometry]#*x}c") ;;
     esac
   }
 

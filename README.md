@@ -8,6 +8,7 @@ following terminals:
 - **XTerm**
 - **xfce4-terminal**
 - **st**
+- **kitty**
 ## installation
 ```
 $ git clone https://github.com/budlabs/i3term.git
@@ -22,7 +23,7 @@ $ make
 #### runtime dependencies
 - [i3ass]  
 - [rofi] (*to use*: `i3term --palette-menu`)  
-- `xterm|urxvt|xfce4-terminal|st`
+- `xterm|urxvt|xfce4-terminal|st|kitty`
 ## usage
 `i3term` needs to know which terminal emulator to
 use. Make sure it is declared in
@@ -41,6 +42,7 @@ i3term [OPTIONS]
 -h, --help                                | display help and exit 
 --hide                                    | option will get redirected to i3run 
 -i, --instance               INSTANCE     | instance name to target
+--kitty-options              OPTIONS      | extra options passed to kitty
 --large-font                              | if setting "large_font" is set it will be used 
 -l, --list-palettes                       | lists available palettes
 --login                                   | passes '-l' to the shell 
@@ -53,7 +55,7 @@ i3term [OPTIONS]
 --shell                      SHELL        | set shell, defaults to `$SHELL`
 --st-options                 OPTIONS      | extra options passed to st
 -s, --summon                              | option will get redirected to i3run 
---terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal)
+--terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal|kitty)
 --urxvt-options              OPTIONS      | extra options passed to urxvt
 -V, --verbose                             | print command and script file to stderr  
 -v, --version                             | print version and exit 
@@ -86,11 +88,11 @@ set $X  exec --no-startup-id
 # ignore terminals with instance name "auto" (--autotile)
 # from the DEFAULT rule.
 DEFAULT \
-  class=(URxvt|XTerm|st-256color) instance=auto, \
+  class=(URxvt|XTerm|st-256color|kitty) instance=auto, \
   class=Xfce4-terminal role=auto
     floating enable, border normal 2, title_window_icon padding 3px
 
-# instace match XTerm|URxvt|st , role matches Xfce4-terminal
+# instace match XTerm|URxvt|st|kitty , role matches Xfce4-terminal
 instance=mainterm, role=mainterm
   $TC A
 
@@ -105,7 +107,7 @@ instance=typiskt, role=typiskt
     $X i3Kornhe --oneshot --margin 300 move 4; \
     workspace 2
 
-instance=sidplayfp class=(URxvt|XTerm|st-256color), \
+instance=sidplayfp class=(URxvt|XTerm|st-256color|kitty), \
 role=sidplayfp class=Xfce4-terminal
   $TC A
 ```

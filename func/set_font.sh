@@ -39,6 +39,8 @@ set_font() {
       xterm          ) terminal_command+=("-fa" "xft:$font_face:size=${_o[font-size]}") ;;
       urxvtc         ) terminal_command+=("-fn" "xft:$font_face:size=${_o[font-size]}") ;;
       xfce4-terminal ) terminal_command+=("--font" "$font_face ${_o[font-size]}")       ;;
+      kitty          ) terminal_command+=("-o" "font_name=\"$font_face\"")
+                       terminal_command+=("-o" "font_size=${_o[font-size]}")            ;;
     esac
   }
 }

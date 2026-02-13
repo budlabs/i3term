@@ -2,8 +2,8 @@
 
 launch_terminal() {
   case "$_base_command" in
-    # st and xterm is always started in the foreground by default
-    st|xterm )
+    # st, xterm and kitty are always started in the foreground by default
+    st|xterm|kitty )
       nohup env BASHBUD_VERBOSE='' BASHBUD_LOG='' "${terminal_command[@]}" > /dev/null 2>&1 &
     ;;
 

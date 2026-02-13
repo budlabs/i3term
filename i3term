@@ -35,7 +35,7 @@ main(){
   
   parse_config
 
-  [[ $_base_command =~ (xterm|urxvtc|xfce4-terminal|st) ]] \
+  [[ $_base_command =~ (xterm|urxvtc|xfce4-terminal|st|kitty) ]] \
     || ERX "'$_base_command' is not a supported terminal." \
            "set 'terminal' option in $XDG_CONFIG_HOME/i3term/config"
 
@@ -81,6 +81,7 @@ main(){
     st             ) terminal_command+=(-n     "${_o[instance]}") ;;
     xterm|urxvtc   ) terminal_command+=(-name  "${_o[instance]}") ;;
     xfce4-terminal ) terminal_command+=(--role "${_o[instance]}") ;;
+    kitty          ) terminal_command+=(--name "${_o[instance]}") ;;
   esac
 
   set_font

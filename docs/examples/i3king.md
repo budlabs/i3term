@@ -8,11 +8,11 @@ set $X  exec --no-startup-id
 # ignore terminals with instance name "auto" (--autotile)
 # from the DEFAULT rule.
 DEFAULT \
-  class=(URxvt|XTerm|st-256color) instance=auto, \
+  class=(URxvt|XTerm|st-256color|kitty) instance=auto, \
   class=Xfce4-terminal role=auto
     floating enable, border normal 2, title_window_icon padding 3px
 
-# instace match XTerm|URxvt|st , role matches Xfce4-terminal
+# instace match XTerm|URxvt|st|kitty , role matches Xfce4-terminal
 instance=mainterm, role=mainterm
   $TC A
 
@@ -27,7 +27,7 @@ instance=typiskt, role=typiskt
     $X i3Kornhe --oneshot --margin 300 move 4; \
     workspace 2
 
-instance=sidplayfp class=(URxvt|XTerm|st-256color), \
+instance=sidplayfp class=(URxvt|XTerm|st-256color|kitty), \
 role=sidplayfp class=Xfce4-terminal
   $TC A
 ```

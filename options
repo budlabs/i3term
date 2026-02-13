@@ -18,6 +18,7 @@
 --xterm-options OPTIONS
 --urxvt-options OPTIONS
 --st-options OPTIONS
+--kitty-options OPTIONS
 --geometry|-G GEOMETRY
 --dont-beam-me-up-scotty
 --shell SHELL --login

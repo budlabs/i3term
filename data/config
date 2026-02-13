@@ -1,5 +1,5 @@
 # terminal MUST BE SET
-# urxvt|xterm|xfce4-terminal|st
+# urxvt|xterm|xfce4-terminal|st|kitty
 # override with --terminal
 terminal               = 
 
@@ -45,5 +45,6 @@ xfce4-terminal_options =
 xterm_options          = 
 st_options             = 
 urxvt_options          = 
+kitty_options          = 
 
 # syntax:ssHash

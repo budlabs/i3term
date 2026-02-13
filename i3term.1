@@ -1,22 +1,19 @@
 .nh
-.TH I3TERM  1 2022-07-22 budlabs "User Manuals"
+.TH I3TERM  1 2022-07-28 budlabs "User Manuals"
 .SH NAME
 .PP
 i3term - launch terminals with i3run
 
 .SH USAGE
 .PP
-\fB\fCi3term [OPTIONS]\fR
+\fBi3term [OPTIONS]\fR
 .br
-\fB\fCi3term\fR needs to know which terminal emulator to
+\fBi3term\fR needs to know which terminal emulator to
 use. Make sure it is declared in
-the \fBconfiguration file\fP (\fB\fC~/.config/i3term/config\fR).
+the \fBconfiguration file\fP (\fB~/.config/i3term/config\fR).
 
 .SH OPTIONS
-.PP
-.RS
-
-.nf
+.EX
 -a, --autotile                            | always creates a new window with instance "auto"
 --bg                         COLOR        | set background color
 -d, --cd                     DIR          | set initial working directory 
@@ -29,10 +26,12 @@ the \fBconfiguration file\fP (\fB\fC~/.config/i3term/config\fR).
 -h, --help                                | display help and exit 
 --hide                                    | option will get redirected to i3run 
 -i, --instance               INSTANCE     | instance name to target
+--kitty-options              OPTIONS      | extra options passed to kitty
 --large-font                              | if setting "large_font" is set it will be used 
 -l, --list-palettes                       | lists available palettes
 --login                                   | passes '-l' to the shell 
 -m, --mouse                               | option will get redirected to i3run 
+--no-exec                                 | short description  
 -g, --nohide                              | option will get redirected to i3run 
 -p, --palette                PALETTE|FILE | use the colors from palette
 --palette-menu                            | short description  
@@ -40,27 +39,22 @@ the \fBconfiguration file\fP (\fB\fC~/.config/i3term/config\fR).
 --shell                      SHELL        | set shell, defaults to `$SHELL`
 --st-options                 OPTIONS      | extra options passed to st
 -s, --summon                              | option will get redirected to i3run 
---terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal)
+--terminal                   TERMINAL     | terminal emulator (urxvt|xterm|st|xfce4-terminal|kitty)
 --urxvt-options              OPTIONS      | extra options passed to urxvt
 -V, --verbose                             | print command and script file to stderr  
 -v, --version                             | print version and exit 
 --xfce4-terminal-options     OPTIONS      | extra options passed to xfce4-terminal
 --xterm-options              OPTIONS      | extra options passed to xterm
-
-.fi
-.RE
+.EE
 
 .SH EXAMPLES
 .SS i3 keybinding configuration
 .PP
-The \fB\fC$exec\fR and \fB\fC$super\fR variables are compatible
+The \fB$exec\fR and \fB$super\fR variables are compatible
 with the configuration example from the i3ass wiki
 \[la]https://github.com/budlabs/i3ass/wiki\[ra]\&.
 
-.PP
-.RS
-
-.nf
+.EX
 set $exec exec --no-startup-id exec
 set $super bindsym Mod4
 
@@ -69,15 +63,10 @@ $super+Control+Return $exec i3term --autotile
 $super+Shift+Return   $exec i3term --instance floatterm --summon --geometry 50x8
 $super+t              $exec i3term --palette-menu
 $super+v              $exec typisktstart
-
-.fi
-.RE
+.EE
 
 .SS i3king config examples
-.PP
-.RS
-
-.nf
+.EX
 # TC is a variable for i3fyra --move A|B|C|D
 set $TC exec --no-startup-id i3fyra --conid $CONID --move
 set $X  exec --no-startup-id
@@ -85,11 +74,11 @@ set $X  exec --no-startup-id
 # ignore terminals with instance name "auto" (--autotile)
 # from the DEFAULT rule.
 DEFAULT \\
-  class=(URxvt|XTerm|st-256color) instance=auto, \\
-  class=Xfce4-terminal role=auto,
+  class=(URxvt|XTerm|st-256color|kitty) instance=auto, \\
+  class=Xfce4-terminal role=auto
     floating enable, border normal 2, title_window_icon padding 3px
 
-# instace match XTerm|URxvt|st , role matches Xfce4-terminal
+# instace match XTerm|URxvt|st|kitty , role matches Xfce4-terminal
 instance=mainterm, role=mainterm
   $TC A
 
@@ -104,12 +93,10 @@ instance=typiskt, role=typiskt
     $X i3Kornhe --oneshot --margin 300 move 4; \\
     workspace 2
 
-instance=sidplayfp class=(URxvt|XTerm|st-256color), \\
+instance=sidplayfp class=(URxvt|XTerm|st-256color|kitty), \\
 role=sidplayfp class=Xfce4-terminal
   $TC A
-
-.fi
-.RE
+.EE
 
 .SS sidopen
 .PP
@@ -118,10 +105,7 @@ With sidplayfp
 \[la]https://github.com/libsidplayfp/libsidplayfp\[ra] in a terminal using the C64 font and colors.
 
 
-.PP
-.RS
-
-.nf
+.EX
 #!/bin/bash
 
 # aur/ttf-c64
@@ -131,9 +115,7 @@ i3term --instance sidplayfp          \\
        --font ' C64 Pro Mono'        \\
        --geometry 56x16              \\
   -- sidplayfp -q "$1"
-
-.fi
-.RE
+.EE
 
 .SS typisktstart
 .PP
@@ -142,10 +124,7 @@ This is just a wrapper script around typiskt
 convenient to change properties in its own script.
 
 
-.PP
-.RS
-
-.nf
+.EX
 #!/bin/bash
 
 # aur/ttf-go-mono-git
@@ -154,9 +133,7 @@ i3term --font "Go Mono" --font-size "16" \\
        --palette clrs-light              \\
        --geometry 50x12                  \\
   -- typiskt --corpus english --lines 3
-
-.fi
-.RE
+.EE
 
 .SH CONTACT
 .PP
@@ -166,6 +143,6 @@ https://github.com/budlabs/i3term/issues
 
 .SH COPYRIGHT
 .PP
-Copyright (c) 2022, budRich of budlabs
+Copyright (c) 2022-2024, budRich of budlabs
 .br
 SPDX-License-Identifier: 0BSD

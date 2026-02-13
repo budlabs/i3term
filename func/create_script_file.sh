@@ -83,5 +83,12 @@ create_script_file() {
   fi >> "$_temp_file"
 
   chmod +x "$_temp_file"
-  terminal_command+=("-e" "$_temp_file")
+
+  # kitty does not support -e for command
+  # instead it's passed directly after options
+  if [[ $_base_command == kitty ]]; then
+    terminal_command+=("$_temp_file")
+  else
+    terminal_command+=("-e" "$_temp_file")
+  fi
 }

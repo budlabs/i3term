@@ -9,7 +9,7 @@ theme_menu() {
 
   read -rs class stdin_term < <(i3get -r ct --print-format '%v ')
 
-  [[ $class =~ (URxvt|XTerm|st-256color|Xfce4-terminal) && $stdin_term =~ ^/dev/pts/[0-9]+$ ]] || {
+  [[ $class =~ (URxvt|XTerm|st-256color|Xfce4-terminal|kitty) && $stdin_term =~ ^/dev/pts/[0-9]+$ ]] || {
     notify-send -u critical \
       '"i3term --palette-menu" only work on terminals'
     exit
